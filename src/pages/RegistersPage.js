@@ -706,26 +706,6 @@ const RegistersPage = () => {
               </Block>
             </Grid>
           )}
-          {hasRights(RIGHT_REGISTERS_INSUREES) && (
-            <Uploader
-              acceptableFormats={INSUREE_EXPORT_TYPES}
-              blockName={INSUREES_TYPE}
-              formatMessage={formatMessage}
-              forms={forms}
-              handleFieldChange={handleFieldChange}
-              onPopupClose={onPopupClose}
-              onRegisterDownload={onRegisterDownload}
-              onSubmit={onSubmit}
-              openPopup={openPopup}
-              popupName="openInsurees"
-              popupState={popupState}
-              strategies={INSUREES_STRATEGIES}
-              blockTitle="insureesBlockTitle"
-              downloadLabel="insurees.downloadLabel"
-              uploadLabel="insurees.uploadLabel"
-              uploadPopupMessage="UploadDialog.confirmInsurees"
-            />
-          )}
           {hasRights(RIGHT_REGISTERS_ITEMS) && (
             <Grid item xs={4}>
               <Block title={formatMessage("itemsBlockTitle")}>
