@@ -36,6 +36,7 @@ import {
   RIGHT_REGISTERS_ITEMS,
   RIGHT_REGISTERS_SERVICES,
   RIGHT_REGISTERS_INSUREES,
+  RIGHT_REGISTERS_SPIMM,
   EXPORT_TYPE_XLSX,
   EXPORT_TYPE_XLS,
   EXPORT_TYPE_JSON,
@@ -706,25 +707,25 @@ const RegistersPage = () => {
               </Block>
             </Grid>
           )}
-          {hasRights(RIGHT_REGISTERS_INSUREES) && (
-            <Uploader
-              acceptableFormats={INSUREE_EXPORT_TYPES}
-              blockName={INSUREES_TYPE}
-              formatMessage={formatMessage}
-              forms={forms}
-              handleFieldChange={handleFieldChange}
-              onPopupClose={onPopupClose}
-              onRegisterDownload={onRegisterDownload}
-              onSubmit={onSubmit}
-              openPopup={openPopup}
-              popupName="openInsurees"
-              popupState={popupState}
-              strategies={INSUREES_STRATEGIES}
-              blockTitle="insureesBlockTitle"
-              downloadLabel="insurees.downloadLabel"
-              uploadLabel="insurees.uploadLabel"
-              uploadPopupMessage="UploadDialog.confirmInsurees"
-            />
+          {hasRights(RIGHT_REGISTERS_SPIMM) && (
+            <Grid item xs={4}>
+              <Block title={formatMessage("spimmBlockTitle")}>
+                <Grid container spacing={2} direction="column">
+                  <Grid item>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={onRegisterDownload(
+                        "spimm",
+                        EXPORT_TYPE_XLSX
+                      )}
+                    >
+                      {formatMessage("downloadBtn")}
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Block>
+            </Grid>
           )}
           {hasRights(RIGHT_REGISTERS_ITEMS) && (
             <Grid item xs={4}>
