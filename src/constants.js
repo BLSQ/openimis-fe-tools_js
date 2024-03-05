@@ -7,6 +7,7 @@ export const RIGHT_REGISTERS_HEALTH_FACILITIES = [131004, 131003];
 export const RIGHT_REGISTERS_LOCATIONS = [131006, 131005];
 export const RIGHT_REGISTERS_ITEMS = [131008, 131007];
 export const RIGHT_REGISTERS_SERVICES = [131010, 131009];
+export const RIGHT_REGISTERS_INDIGENTS = [131012, 131011];
 export const RIGHT_EXTRACTS = [131101, 131102, 131103, 131104, 131105, 131106];
 export const RIGHT_REPORTS = [
   131201, 131202, 131203, 131204, 131205, 131206, 131207, 131208, 131209,
@@ -41,3 +42,4 @@ export const DIAGNOSIS_TYPE = "diagnosis";
 export const HF_TYPE = "hf";
 export const ITEMS_TYPE = "items";
 export const SERVICES_TYPE = "services";
+export const INDIGENTS_TYPE = "indigents";

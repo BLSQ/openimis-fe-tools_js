@@ -46,7 +46,7 @@ import {
   DIAGNOSIS_TYPE,
   HF_TYPE,
   ITEMS_TYPE,
-  SERVICES_TYPE,
+  SERVICES_TYPE, INDIGENTS_TYPE, RIGHT_REGISTERS_INDIGENTS,
 } from "../constants";
 
 const DIAGNOSES_STRATEGIES = [
@@ -121,6 +121,7 @@ const RegistersPage = () => {
       openItems: uploadType === ITEMS_TYPE,
       openServices: uploadType === SERVICES_TYPE,
       openInsurees: uploadType === INSUREES_TYPE,
+      openIndigents: uploadType === INDIGENTS_TYPE,
       anchorEl: e.currentTarget,
       error: null,
     });
@@ -135,6 +136,7 @@ const RegistersPage = () => {
       openItems: false,
       openServices: false,
       openInsurees: false,
+      openIndigents: false,
       anchorEl: null,
       error: null,
     });
@@ -201,7 +203,6 @@ const RegistersPage = () => {
           generalError:
             payload.error && `Error ${response.status}: ${payload.error}`,
         });
-        return;
       }
 
       setDialogState({
@@ -225,7 +226,6 @@ const RegistersPage = () => {
       });
     }
   };
-  console.log("TOOLS RENDERING")
   return (
     <>
       {dialogState?.open && (
@@ -289,7 +289,11 @@ const RegistersPage = () => {
                 {dialogState.uploadErrors?.length > 0 && (
                   <Box my={1}>
                     <b>{formatMessage("UploadDialog.errors")}</b>
-                    {dialogState.uploadErrors.join(", ")}
+                    {dialogState.uploadErrors.map((element, index) => (
+                      <Box key={index} my={1}>
+                        {element}
+                      </Box>
+                    ))}
                   </Box>
                 )}
               </>
@@ -993,6 +997,109 @@ const RegistersPage = () => {
                                       forms.services?.strategy
                                     )
                                   }
+                                >
+                                  {formatMessage("uploadBtn")}
+                                </Button>
+                                <Button
+                                  onClick={onPopupClose}
+                                  variant="contained"
+                                >
+                                  {formatMessage("cancelBtn")}
+                                </Button>
+                              </DialogActions>
+                            </Dialog>
+                          )}
+                        </Grid>
+                      </Grid>
+                    </form>
+                  </Grid>
+                </Grid>
+              </Block>
+            </Grid>
+          )}
+          {hasRights(RIGHT_REGISTERS_INDIGENTS) && (
+            <Grid item xs={4}>
+              <Block title={formatMessage("indigentsBlockTitle")}>
+                <Grid container spacing={2} direction="column">
+                  <Grid item>
+                    <Typography variant="h6">
+                      {formatMessage("indigents.downloadLabel")}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <form noValidate>
+                      <Grid container spacing={1} direction="column">
+                        <Grid item>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={onRegisterDownload(
+                              INDIGENTS_TYPE,
+                              EXPORT_TYPE_XLSX
+                            )}
+                          >
+                            {formatMessage("downloadBtn")}
+                          </Button>
+                        </Grid>
+                      </Grid>
+                    </form>
+                  </Grid>
+                  <Grid item>
+                    <Divider fullWidth />
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="h6">
+                      {formatMessage("indigents.uploadLabel")}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <form noValidate>
+                      <Grid container spacing={1} direction="column">
+                        <Grid item>
+                          <Input
+                            onChange={(event) =>
+                              handleFieldChange(
+                                SERVICES_TYPE,
+                                "file",
+                                event.target.files[0]
+                              )
+                            }
+                            required
+                            id="import-button"
+                            inputProps={{
+                              accept:
+                                ".xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                            }}
+                            type="file"
+                          />
+                        </Grid>
+                        <Grid item>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={(e) => openPopup(e, INDIGENTS_TYPE)}
+                            disabled={!(forms.services?.file)}
+                          >
+                            {formatMessage("uploadBtn")}
+                          </Button>
+                          {popupState?.open && popupState?.openIndigents && (
+                            <Dialog
+                              open
+                              onClose={onPopupClose}
+                              fullWidth
+                              maxWidth="sm"
+                            >
+                              <DialogTitle>
+                                {formatMessage("UploadDialog.confirmIndigents")}
+                              </DialogTitle>
+                              <DialogActions>
+                                <Button
+                                  variant="contained"
+                                  color="primary"
+                                  onClick={() =>
+                                    onSubmit(forms.services, INDIGENTS_TYPE)
+                                  }
+                                  disabled={!(forms.services?.file)}
                                 >
                                   {formatMessage("uploadBtn")}
                                 </Button>
