@@ -46,7 +46,7 @@ import {
   DIAGNOSIS_TYPE,
   HF_TYPE,
   ITEMS_TYPE,
-  SERVICES_TYPE, INDIGENTS_TYPE, RIGHT_REGISTERS_INDIGENTS,
+  SERVICES_TYPE, INDIGENTS_TYPE, RIGHT_REGISTERS_INDIGENTS, FORMAL_SECTOR_TYPE, RIGHT_REGISTERS_FORMAL_SECTOR,
 } from "../constants";
 
 const DIAGNOSES_STRATEGIES = [
@@ -122,6 +122,7 @@ const RegistersPage = () => {
       openServices: uploadType === SERVICES_TYPE,
       openInsurees: uploadType === INSUREES_TYPE,
       openIndigents: uploadType === INDIGENTS_TYPE,
+      openFormalSector: uploadType === FORMAL_SECTOR_TYPE,
       anchorEl: e.currentTarget,
       error: null,
     });
@@ -137,6 +138,7 @@ const RegistersPage = () => {
       openServices: false,
       openInsurees: false,
       openIndigents: false,
+      openFormalSector: false,
       anchorEl: null,
       error: null,
     });
@@ -1059,7 +1061,7 @@ const RegistersPage = () => {
                           <Input
                             onChange={(event) =>
                               handleFieldChange(
-                                SERVICES_TYPE,
+                                INDIGENTS_TYPE,
                                 "file",
                                 event.target.files[0]
                               )
@@ -1078,7 +1080,7 @@ const RegistersPage = () => {
                             variant="contained"
                             color="primary"
                             onClick={(e) => openPopup(e, INDIGENTS_TYPE)}
-                            disabled={!(forms.services?.file)}
+                            disabled={!(forms.indigents?.file)}
                           >
                             {formatMessage("uploadBtn")}
                           </Button>
@@ -1097,9 +1099,112 @@ const RegistersPage = () => {
                                   variant="contained"
                                   color="primary"
                                   onClick={() =>
-                                    onSubmit(forms.services, INDIGENTS_TYPE)
+                                    onSubmit(forms.indigents, INDIGENTS_TYPE)
                                   }
-                                  disabled={!(forms.services?.file)}
+                                  disabled={!(forms.indigents?.file)}
+                                >
+                                  {formatMessage("uploadBtn")}
+                                </Button>
+                                <Button
+                                  onClick={onPopupClose}
+                                  variant="contained"
+                                >
+                                  {formatMessage("cancelBtn")}
+                                </Button>
+                              </DialogActions>
+                            </Dialog>
+                          )}
+                        </Grid>
+                      </Grid>
+                    </form>
+                  </Grid>
+                </Grid>
+              </Block>
+            </Grid>
+          )}
+          {hasRights(RIGHT_REGISTERS_FORMAL_SECTOR) && (
+            <Grid item xs={4}>
+              <Block title={formatMessage("formalSectorBlockTitle")}>
+                <Grid container spacing={2} direction="column">
+                  <Grid item>
+                    <Typography variant="h6">
+                      {formatMessage("formalSector.downloadLabel")}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <form noValidate>
+                      <Grid container spacing={1} direction="column">
+                        <Grid item>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={onRegisterDownload(
+                              FORMAL_SECTOR_TYPE,
+                              EXPORT_TYPE_XLSX
+                            )}
+                          >
+                            {formatMessage("downloadBtn")}
+                          </Button>
+                        </Grid>
+                      </Grid>
+                    </form>
+                  </Grid>
+                  <Grid item>
+                    <Divider fullWidth />
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="h6">
+                      {formatMessage("formalSector.uploadLabel")}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <form noValidate>
+                      <Grid container spacing={1} direction="column">
+                        <Grid item>
+                          <Input
+                            onChange={(event) =>
+                              handleFieldChange(
+                                FORMAL_SECTOR_TYPE,
+                                "file",
+                                event.target.files[0]
+                              )
+                            }
+                            required
+                            id="import-button"
+                            inputProps={{
+                              accept:
+                                ".xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                            }}
+                            type="file"
+                          />
+                        </Grid>
+                        <Grid item>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={(e) => openPopup(e, FORMAL_SECTOR_TYPE)}
+                            disabled={!(forms.formal_sector?.file)}
+                          >
+                            {formatMessage("uploadBtn")}
+                          </Button>
+                          {popupState?.open && popupState?.openFormalSector && (
+                            <Dialog
+                              open
+                              onClose={onPopupClose}
+                              fullWidth
+                              maxWidth="sm"
+                            >
+                              <DialogTitle>
+                                {formatMessage("UploadDialog.confirmFormalSector")}
+                              </DialogTitle>
+                              <DialogActions>
+                                <Button
+                                  variant="contained"
+                                  color="primary"
+                                  onClick={() =>
+                                    onSubmit(forms.formal_sector, FORMAL_SECTOR_TYPE)
+                                  }
+                                  disabled={!(forms.formal_sector?.file)}
                                 >
                                   {formatMessage("uploadBtn")}
                                 </Button>
