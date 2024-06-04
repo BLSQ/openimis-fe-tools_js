@@ -43,7 +43,7 @@ import {
   EXPORT_TYPE_XML,
   INSUREES_TYPE,
   LOCATIONS_TYPE,
-  DIAGNOSIS_TYPE,
+  DIAGNOSES_TYPE,
   HF_TYPE,
   ITEMS_TYPE,
   SERVICES_TYPE, INDIGENTS_TYPE, RIGHT_REGISTERS_INDIGENTS, FORMAL_SECTOR_TYPE, RIGHT_REGISTERS_FORMAL_SECTOR,
@@ -77,6 +77,11 @@ const INSUREE_EXPORT_TYPES = [
   EXPORT_TYPE_XLS,
   EXPORT_TYPE_XLSX,
 ];
+
+const RESTRICTED_EXPORT_TYPES = [
+  EXPORT_TYPE_XLSX,
+  EXPORT_TYPE_XML,
+]
 
 const RegistersPage = () => {
   const { formatMessage } = useTranslations("tools.RegistersPage");
@@ -116,7 +121,7 @@ const RegistersPage = () => {
     setPopupState({
       open: true,
       openLocations: uploadType === LOCATIONS_TYPE,
-      openDiagnosis: uploadType === DIAGNOSIS_TYPE,
+      openDiagnosis: uploadType === DIAGNOSES_TYPE,
       openHF: uploadType === HF_TYPE,
       openItems: uploadType === ITEMS_TYPE,
       openServices: uploadType === SERVICES_TYPE,
@@ -319,13 +324,38 @@ const RegistersPage = () => {
               <Block title={formatMessage("diagnosesBlockTitle")}>
                 <Grid container spacing={2} direction="column">
                   <Grid item>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={onRegisterDownload("diagnoses", EXPORT_TYPE_XML)}
-                    >
-                      {formatMessage("downloadBtn")}
-                    </Button>
+                    <Typography variant="h6">
+                      {formatMessage("diagnoses.downloadLabel")}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <form noValidate>
+                      <Grid container spacing={1} direction="column">
+                        <ConstantBasedPicker
+                          module="tools"
+                          label="formatPicker"
+                          onChange={(value) =>
+                            handleFieldChange(DIAGNOSES_TYPE, "format", value)
+                          }
+                          required
+                          constants={RESTRICTED_EXPORT_TYPES}
+                          withNull
+                        />
+                        <Grid item>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={onRegisterDownload(
+                              DIAGNOSES_TYPE,
+                              forms.diagnoses?.format
+                            )}
+                            disabled={!forms.diagnoses?.format}
+                          >
+                            {formatMessage("downloadBtn")}
+                          </Button>
+                        </Grid>
+                      </Grid>
+                    </form>
                   </Grid>
                   <Grid item>
                     <Divider fullWidth />
@@ -388,7 +418,7 @@ const RegistersPage = () => {
                           <Button
                             variant="contained"
                             color="primary"
-                            onClick={(e) => openPopup(e, DIAGNOSIS_TYPE)}
+                            onClick={(e) => openPopup(e, DIAGNOSES_TYPE)}
                             disabled={
                               !(
                                 forms.diagnoses?.file &&
@@ -446,16 +476,38 @@ const RegistersPage = () => {
               <Block title={formatMessage("locationsBlockTitle")}>
                 <Grid container spacing={2} direction="column">
                   <Grid item>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={onRegisterDownload(
-                        LOCATIONS_TYPE,
-                        EXPORT_TYPE_XML
-                      )}
-                    >
-                      {formatMessage("downloadBtn")}
-                    </Button>
+                    <Typography variant="h6">
+                      {formatMessage("locations.downloadLabel")}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <form noValidate>
+                      <Grid container spacing={1} direction="column">
+                        <ConstantBasedPicker
+                          module="tools"
+                          label="formatPicker"
+                          onChange={(value) =>
+                            handleFieldChange(LOCATIONS_TYPE, "format", value)
+                          }
+                          required
+                          constants={RESTRICTED_EXPORT_TYPES}
+                          withNull
+                        />
+                        <Grid item>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={onRegisterDownload(
+                              LOCATIONS_TYPE,
+                              forms.locations?.format
+                            )}
+                            disabled={!forms.locations?.format}
+                          >
+                            {formatMessage("downloadBtn")}
+                          </Button>
+                        </Grid>
+                      </Grid>
+                    </form>
                   </Grid>
                   <Grid item>
                     <Divider fullWidth />
@@ -580,16 +632,38 @@ const RegistersPage = () => {
               <Block title={formatMessage("healthFacilitiesBlockTitle")}>
                 <Grid container spacing={2} direction="column">
                   <Grid item>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={onRegisterDownload(
-                        "healthfacilities",
-                        EXPORT_TYPE_XML
-                      )}
-                    >
-                      {formatMessage("downloadBtn")}
-                    </Button>
+                    <Typography variant="h6">
+                      {formatMessage("healthFacilities.downloadLabel")}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <form noValidate>
+                      <Grid container spacing={1} direction="column">
+                        <ConstantBasedPicker
+                          module="tools"
+                          label="formatPicker"
+                          onChange={(value) =>
+                            handleFieldChange(HF_TYPE, "format", value)
+                          }
+                          required
+                          constants={RESTRICTED_EXPORT_TYPES}
+                          withNull
+                        />
+                        <Grid item>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={onRegisterDownload(
+                              HF_TYPE,
+                              forms.health_facilities?.format
+                            )}
+                            disabled={!forms.health_facilities?.format}
+                          >
+                            {formatMessage("downloadBtn")}
+                          </Button>
+                        </Grid>
+                      </Grid>
+                    </form>
                   </Grid>
                   <Grid item>
                     <Divider fullWidth />
@@ -606,7 +680,7 @@ const RegistersPage = () => {
                           <Input
                             onChange={(event) =>
                               handleFieldChange(
-                                "healthFacilities",
+                                "health_facilities",
                                 "file",
                                 event.target.files[0]
                               )
@@ -625,7 +699,7 @@ const RegistersPage = () => {
                             label="strategyPicker"
                             onChange={(value) =>
                               handleFieldChange(
-                                "healthFacilities",
+                                "health_facilities",
                                 "strategy",
                                 value
                               )
@@ -640,10 +714,10 @@ const RegistersPage = () => {
                             label={formatMessage("dryRunLabel")}
                             control={
                               <Checkbox
-                                checked={forms.healthFacilities?.dryRun}
+                                checked={forms.health_facilities?.dryRun}
                                 onChange={(e) =>
                                   handleFieldChange(
-                                    "healthFacilities",
+                                    "health_facilities",
                                     "dryRun",
                                     e.target.checked
                                   )
@@ -659,8 +733,8 @@ const RegistersPage = () => {
                             onClick={(e) => openPopup(e, HF_TYPE)}
                             disabled={
                               !(
-                                forms.healthFacilities?.file &&
-                                forms.healthFacilities?.strategy
+                                forms.health_facilities?.file &&
+                                forms.health_facilities?.strategy
                               )
                             }
                           >
@@ -682,14 +756,14 @@ const RegistersPage = () => {
                                   color="primary"
                                   onClick={() =>
                                     onSubmit(
-                                      forms.healthFacilities,
-                                      "healthfacilities"
+                                      forms.health_facilities,
+                                      "health_facilities"
                                     )
                                   }
                                   disabled={
                                     !(
-                                      forms.healthFacilities?.file &&
-                                      forms.healthFacilities?.strategy
+                                      forms.health_facilities?.file &&
+                                      forms.health_facilities?.strategy
                                     )
                                   }
                                 >
