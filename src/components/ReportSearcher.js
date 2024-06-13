@@ -29,7 +29,10 @@ const ReportSearcher = () => {
               {formatMessage("ReportSearcher.editBtn")}
             </Button>
           }
-          <GenerateReportPicker name={r.name} />
+          <GenerateReportPicker
+            name={r.name}
+            {...(r.name === "nhia_claim_details" && { outputFormat: "xlsx" })}
+          />
         </Box>
       ),
     ],
