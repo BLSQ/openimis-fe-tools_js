@@ -24,7 +24,6 @@ import {
   apiHeaders,
 } from "@openimis/fe-core";
 import Block from "../components/Block";
-import Uploader from "../components/Uploader";
 import {
   STRATEGY_INSERT,
   STRATEGY_INSERT_UPDATE,
@@ -35,9 +34,7 @@ import {
   RIGHT_REGISTERS_LOCATIONS,
   RIGHT_REGISTERS_ITEMS,
   RIGHT_REGISTERS_SERVICES,
-  RIGHT_REGISTERS_INSUREES,
   EXPORT_TYPE_XLSX,
-  EXPORT_TYPE_XLS,
   EXPORT_TYPE_JSON,
   EXPORT_TYPE_CSV,
   EXPORT_TYPE_XML,
@@ -61,21 +58,13 @@ const LOCATIONS_STRATEGIES = [
   STRATEGY_INSERT_UPDATE,
 ];
 const HEALTH_FACILITIES_STRATEGIES = LOCATIONS_STRATEGIES;
-const INSUREES_STRATEGIES = LOCATIONS_STRATEGIES;
 const MEDICAL_ITEMS_STRATEGIES = DIAGNOSES_STRATEGIES;
 const MEDICAL_SERVICES_STRATEGIES = DIAGNOSES_STRATEGIES;
 const EXPORT_TYPES = [
   EXPORT_TYPE_CSV,
   EXPORT_TYPE_JSON,
-  EXPORT_TYPE_XLS,
   EXPORT_TYPE_XLSX,
   EXPORT_TYPE_XML,
-];
-const INSUREE_EXPORT_TYPES = [
-  EXPORT_TYPE_CSV,
-  EXPORT_TYPE_JSON,
-  EXPORT_TYPE_XLS,
-  EXPORT_TYPE_XLSX,
 ];
 
 const RESTRICTED_EXPORT_TYPES = [
@@ -848,7 +837,7 @@ const RegistersPage = () => {
                             id="import-button"
                             inputProps={{
                               accept:
-                                ".xml, application/xml, text/xml, .csv, text/csv, .xls, application/vnd.ms-excel, .xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, .json, application/json",
+                                ".xml, application/xml, text/xml, .csv, text/csv, .xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, .json, application/json",
                             }}
                             type="file"
                           />
@@ -998,7 +987,7 @@ const RegistersPage = () => {
                             id="import-button"
                             inputProps={{
                               accept:
-                                ".xml, application/xml, text/xml, .csv, text/csv, .xls, application/vnd.ms-excel, .xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, .json, application/json",
+                                ".xml, application/xml, text/xml, .csv, text/csv, .xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, .json, application/json",
                             }}
                             type="file"
                           />
